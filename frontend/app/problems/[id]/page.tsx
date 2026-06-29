@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Editor from '@monaco-editor/react';
 import { Problem, TestCase, Submission } from '@/types';
+import Link from 'next/link';
 
 const DIFFICULTY_STYLES: Record<string, string> = {
   Easy: 'text-[var(--easy)] bg-[var(--easy-soft)] border-[var(--easy)]/30',
@@ -131,13 +132,33 @@ export default function ProblemPage() {
   const difficultyClass = DIFFICULTY_STYLES[problem.difficulty] ?? DIFFICULTY_STYLES.Easy;
 
   return (
+    
     <div className="flex h-screen bg-[var(--bg)] text-[var(--text)] font-sans">
       {/* Left: problem description */}
       <div className="w-1/2 overflow-y-auto border-r border-[var(--border)]">
         <div className="px-8 py-6 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-xl font-semibold tracking-tight">{problem.title}</h1>
+            <Link
+              href="/problems"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition mb-4"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M19 12H5" />
+                <path d="M12 19l-7-7 7-7" />
+              </svg>
+              Back to problems
+            </Link>
           </div>
+           <h1 className="mb-2 text-xl font-semibold tracking-tight">{problem.title}</h1>
           <span
             className={`inline-block text-xs font-mono font-medium px-2 py-0.5 rounded-full border ${difficultyClass}`}
           >
