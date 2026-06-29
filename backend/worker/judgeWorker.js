@@ -4,7 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const pool = require('../db');
 
-const connection = { host: 'localhost', port: 6379 };
+const connection = process.env.REDIS_URL
+  ? { url: process.env.REDIS_URL }
+  : { host: 'localhost', port: 6379 };
 
 // Runs one piece of code against one input, returns stdout or throws on timeout/error
 function runCode(code, language, input, timeLimitMs) {
