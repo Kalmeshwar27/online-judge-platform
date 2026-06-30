@@ -324,37 +324,6 @@ function FeatureIcon({ icon, title, desc, className = '' }) {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      {/* Nav */}
-      <header className="border-b border-[var(--border)] relative z-10">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Logo />
-
-          <nav className="hidden md:flex items-center gap-7 text-sm text-[var(--text-muted)]">
-            <Link href="/login" className="hover:text-[var(--text)] transition">
-              Problems
-            </Link>
-            <a href="#how-it-works" className="hover:text-[var(--text)] transition">
-              How it works
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="hidden sm:inline text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/signup"
-              className="text-sm font-medium bg-[var(--accent)] text-white px-3.5 py-1.5 rounded-[var(--radius)] hover:brightness-110 transition"
-            >
-              Sign up
-            </Link>
-          </div>
-        </div>
-      </header>
-
       {/* Hero */}
       <section className="relative">
         <HeroBackground />

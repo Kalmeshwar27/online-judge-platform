@@ -50,24 +50,6 @@ export default function ProblemsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <header className="border-b border-[var(--border)]">
-        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <rect width="24" height="24" rx="6" fill="var(--accent)" />
-              <path
-                d="M9 8L6 12L9 16M15 8L18 12L15 16"
-                stroke="white"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="font-semibold text-[15px] tracking-tight">Code Arena</span>
-          </Link>
-        </div>
-      </header>
-
       <main className="max-w-4xl mx-auto px-6 py-10">
         <h1 className="text-2xl font-bold tracking-tight">Problems</h1>
         <p className="text-[var(--text-muted)] text-sm mt-1">

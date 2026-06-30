@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { setAuth } from '@/lib/auth';
 
 function Logo() {
   return (
@@ -63,6 +64,7 @@ export default function SignupPage() {
       const data = await res.json();
 
       if (data.success) {
+        setAuth(data.token, data.user);
         router.push('/problems');
       } else {
         setError(data.message ?? 'Could not create your account. Try again.');

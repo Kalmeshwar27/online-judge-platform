@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { setAuth } from '@/lib/auth';
 
 function Logo() {
   return (
@@ -47,6 +48,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (data.success) {
+        setAuth(data.token, data.user);
         router.push('/problems');
       } else {
         setError(data.message ?? 'Could not log in. Check your details and try again.');
