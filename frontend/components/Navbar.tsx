@@ -2,17 +2,31 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { clearAuth, getUser, isAuthenticated } from '@/lib/auth';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [user, setUser] = useState<{ username: string } | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    if (isAuthenticated()) {
-      setUser(getUser());
-    }
+    const checkAuth = () => {
+      if (isAuthenticated()) {
+        setUser(getUser());
+      } else {
+        setUser(null);
+      }
+    };
+
+    checkAuth();
+
+    const handleAuthChange = () => checkAuth();
+    window.addEventListener('storage', handleAuthChange);
+    window.addEventListener('auth-change', handleAuthChange);
+    return () => {
+      window.removeEventListener('storage', handleAuthChange);
+      window.removeEventListener('auth-change', handleAuthChange);
+    };
   }, []);
 
   const handleLogout = async (e: React.MouseEvent) => {
@@ -26,6 +40,10 @@ export default function Navbar() {
     setUser(null);
     window.location.href = '/login';
   };
+
+  if (/^\/problems\/[^/]+$/.test(pathname ?? '')) {
+    return null;
+  }
 
   return (
     <header className="border-b border-[var(--border)] relative z-10">
@@ -45,10 +63,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="flex items-center gap-4 text-sm">
-          <Link href="/problems" className="text-[var(--text-muted)] hover:text-[var(--text)] transition">
-            Problems
-          </Link>
-          {mounted && user ? (
+          {user ? (
             <div className="flex items-center gap-3">
               <span className="text-[var(--text-muted)] text-xs">Hi, {user.username}</span>
               <Link

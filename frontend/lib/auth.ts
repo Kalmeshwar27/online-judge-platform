@@ -15,15 +15,32 @@ export function getUser() {
 export function setAuth(token: string, user: { id: number; username: string; email: string }) {
   localStorage.setItem(TOKEN_KEY, token);
   localStorage.setItem(USER_KEY, JSON.stringify(user));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('auth-change'));
+  }
 }
 
 export function clearAuth() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('auth-change'));
+  }
 }
 
 export function isAuthenticated() {
-  return !!getToken();
+  if (typeof window === 'undefined') return false;
+  
+  const token = getToken();
+  if (!token) return false;
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expiry = payload.exp * 1000;
+    return Date.now() < expiry;
+  } catch {
+    return false;
+  }
 }
 
 export async function apiFetch(url: string, options: RequestInit = {}) {
