@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Verifies the Authorization: Bearer <token> header and attaches req.user.
-// Use on any route that should only work for logged-in users.
+
 function authenticate(req, res, next) {
   const header = req.headers.authorization;
 
