@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { ReactNode } from 'react';
 
 const STEPS = [
   {
@@ -301,21 +302,34 @@ function HeroBackground() {
   );
 }
 
-function FeatureIcon({ icon, title, desc, className = '' }) {
+interface FeatureIconProps {
+  icon?: ReactNode;
+  title?: string;
+  desc?: string;
+  className?: string;
+}
+
+function FeatureIcon({ icon, title, desc, className = '' }: FeatureIconProps) {
+  if (!title) return null;
+
   return (
     <div className={`flex items-start gap-2.5 ${className}`}>
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        className="text-[var(--accent)] mt-0.5 shrink-0"
-      >
-        {icon}
-      </svg>
+      {icon && (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="text-[var(--accent)] mt-0.5 shrink-0"
+        >
+          {icon}
+        </svg>
+      )}
       <div>
         <div className="text-sm font-semibold text-[var(--text)] leading-tight">{title}</div>
-        <div className="text-xs text-[var(--text-muted)] leading-tight mt-0.5">{desc}</div>
+        {desc && (
+          <div className="text-xs text-[var(--text-muted)] leading-tight mt-0.5">{desc}</div>
+        )}
       </div>
     </div>
   );
